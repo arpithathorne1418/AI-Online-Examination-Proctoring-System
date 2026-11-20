@@ -1,0 +1,3471 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI Online Examination Proctoring System</title>
+
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:Arial,sans-serif;
+}
+
+body{
+    background:#f4f7fb;
+    color:#1f2937;
+}
+
+button{
+    cursor:pointer;
+}
+
+/* ================= LOGIN ================= */
+
+.login-page{
+    min-height:100vh;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    background:linear-gradient(135deg,#0f172a,#2563eb);
+}
+
+.login-box{
+    width:430px;
+    background:white;
+    padding:35px;
+    border-radius:18px;
+    box-shadow:0 15px 40px rgba(0,0,0,.25);
+    text-align:center;
+}
+
+.login-logo{
+    width:70px;
+    height:70px;
+    margin:auto auto 15px;
+    background:#2563eb;
+    color:white;
+    border-radius:50%;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    font-size:32px;
+}
+
+.login-box h1{
+    color:#2563eb;
+    margin-bottom:8px;
+}
+
+.subtitle{
+    color:#6b7280;
+    font-size:14px;
+    margin-bottom:25px;
+}
+
+.role-buttons{
+    display:flex;
+    gap:10px;
+    margin-bottom:25px;
+}
+
+.role-buttons button{
+    width:50%;
+    padding:13px;
+    border:0;
+    border-radius:8px;
+    background:#e5e7eb;
+    font-weight:bold;
+}
+
+.role-buttons button.active{
+    background:#2563eb;
+    color:white;
+}
+
+.input-group{
+    text-align:left;
+    margin-bottom:17px;
+}
+
+.input-group label{
+    display:block;
+    font-weight:bold;
+    font-size:14px;
+    margin-bottom:7px;
+}
+
+.input-group input{
+    width:100%;
+    padding:13px;
+    border:1px solid #d1d5db;
+    border-radius:8px;
+}
+
+.login-btn{
+    width:100%;
+    padding:13px;
+    border:0;
+    border-radius:8px;
+    background:#2563eb;
+    color:white;
+    font-size:16px;
+    font-weight:bold;
+}
+
+.register-link{
+    margin-top:18px;
+    color:#2563eb;
+    cursor:pointer;
+    font-size:14px;
+}
+
+.message{
+    margin-top:15px;
+    font-size:13px;
+    font-weight:bold;
+}
+
+.error{
+    color:#dc2626;
+}
+
+.demo-box{
+    margin-top:20px;
+    padding:12px;
+    background:#f3f4f6;
+    border-radius:8px;
+    font-size:12px;
+    line-height:1.7;
+}
+
+/* ================= REGISTRATION ================= */
+
+.registration-page{
+    display:none;
+    min-height:100vh;
+    padding:40px;
+    background:#f4f7fb;
+}
+
+.form-container{
+    max-width:850px;
+    margin:auto;
+    background:white;
+    padding:35px;
+    border-radius:15px;
+    box-shadow:0 5px 20px rgba(0,0,0,.1);
+}
+
+.form-container h1{
+    color:#2563eb;
+    margin-bottom:8px;
+}
+
+.description{
+    color:#6b7280;
+    margin-bottom:25px;
+}
+
+.form-grid{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:18px;
+}
+
+.form-group{
+    display:flex;
+    flex-direction:column;
+}
+
+.form-group.full{
+    grid-column:span 2;
+}
+
+.form-group label{
+    font-weight:bold;
+    font-size:14px;
+    margin-bottom:7px;
+}
+
+.form-group input,
+.form-group select{
+    padding:12px;
+    border:1px solid #d1d5db;
+    border-radius:7px;
+}
+
+.submit-btn{
+    width:100%;
+    padding:14px;
+    margin-top:25px;
+    border:0;
+    border-radius:8px;
+    background:#2563eb;
+    color:white;
+    font-size:16px;
+    font-weight:bold;
+}
+
+.back-btn{
+    width:100%;
+    padding:13px;
+    margin-top:10px;
+    border:0;
+    border-radius:8px;
+    background:#e5e7eb;
+}
+
+/* ================= ADMIN ================= */
+
+.dashboard{
+    display:none;
+}
+
+.sidebar{
+    position:fixed;
+    left:0;
+    top:0;
+    width:245px;
+    height:100vh;
+    background:#111827;
+    color:white;
+    padding:25px 15px;
+}
+
+.logo{
+    text-align:center;
+    margin-bottom:30px;
+}
+
+.logo h2{
+    color:#60a5fa;
+}
+
+.logo p{
+    font-size:11px;
+    color:#9ca3af;
+    margin-top:5px;
+}
+
+.menu a{
+    display:block;
+    padding:13px;
+    margin:6px 0;
+    color:#d1d5db;
+    text-decoration:none;
+    border-radius:8px;
+    cursor:pointer;
+}
+
+.menu a:hover,
+.menu a.active{
+    background:#2563eb;
+    color:white;
+}
+
+.menu .logout{
+    margin-top:25px;
+    background:#dc2626;
+    color:white;
+}
+
+.main{
+    margin-left:245px;
+    padding:30px;
+}
+
+.page{
+    display:none;
+}
+
+.page.active{
+    display:block;
+}
+
+.header{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-bottom:25px;
+}
+
+.header h1{
+    font-size:28px;
+}
+
+.header p{
+    color:#6b7280;
+    margin-top:5px;
+}
+
+.admin-profile{
+    background:white;
+    padding:10px 18px;
+    border-radius:20px;
+    box-shadow:0 2px 8px rgba(0,0,0,.08);
+}
+
+.welcome{
+    background:white;
+    padding:28px;
+    border-radius:12px;
+    margin-bottom:25px;
+    box-shadow:0 3px 12px rgba(0,0,0,.06);
+}
+
+.welcome h2{
+    color:#2563eb;
+    margin-bottom:10px;
+}
+
+.welcome p{
+    color:#6b7280;
+    line-height:1.7;
+}
+
+.cards{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:18px;
+    margin-bottom:25px;
+}
+
+.card{
+    background:white;
+    padding:22px;
+    border-radius:12px;
+    box-shadow:0 3px 12px rgba(0,0,0,.06);
+}
+
+.card-icon{
+    font-size:25px;
+    margin-bottom:10px;
+}
+
+.card p{
+    color:#6b7280;
+    font-size:14px;
+}
+
+.card h2{
+    font-size:30px;
+    margin-top:8px;
+}
+
+.blue{color:#2563eb;}
+.green{color:#16a34a;}
+.orange{color:#ea580c;}
+.red{color:#dc2626;}
+
+.content-box{
+    background:white;
+    padding:25px;
+    border-radius:12px;
+    box-shadow:0 3px 12px rgba(0,0,0,.06);
+}
+
+.content-box h2{
+    margin-bottom:18px;
+}
+
+table{
+    width:100%;
+    border-collapse:collapse;
+}
+
+th,td{
+    padding:13px;
+    border-bottom:1px solid #e5e7eb;
+    text-align:left;
+}
+
+th{
+    color:#6b7280;
+    font-size:14px;
+}
+
+.badge{
+    padding:5px 10px;
+    border-radius:15px;
+    font-size:12px;
+}
+
+.normal{
+    background:#dcfce7;
+    color:#166534;
+}
+
+.warning{
+    background:#fef3c7;
+    color:#92400e;
+}
+
+.danger{
+    background:#fee2e2;
+    color:#991b1b;
+}
+
+/* ================= REPORTS ================= */
+
+.report-grid{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:20px;
+}
+
+.report-card{
+    background:white;
+    padding:25px;
+    border-radius:12px;
+    text-align:center;
+    box-shadow:0 3px 12px rgba(0,0,0,.06);
+}
+
+.report-card h2{
+    font-size:35px;
+    color:#2563eb;
+    margin-top:10px;
+}
+
+/* ================= SETTINGS ================= */
+
+.setting-row{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    padding:18px 0;
+    border-bottom:1px solid #e5e7eb;
+}
+
+.setting-info h3{
+    margin-bottom:5px;
+}
+
+.setting-info p{
+    color:#6b7280;
+    font-size:13px;
+}
+
+.switch{
+    position:relative;
+    display:inline-block;
+    width:50px;
+    height:26px;
+}
+
+.switch input{
+    display:none;
+}
+
+.slider{
+    position:absolute;
+    inset:0;
+    background:#d1d5db;
+    border-radius:30px;
+}
+
+.slider:before{
+    content:"";
+    position:absolute;
+    width:20px;
+    height:20px;
+    left:3px;
+    bottom:3px;
+    background:white;
+    border-radius:50%;
+    transition:.3s;
+}
+
+input:checked+.slider{
+    background:#2563eb;
+}
+
+input:checked+.slider:before{
+    transform:translateX(24px);
+}
+
+/* ================= STUDENT ================= */
+
+.student-page{
+    display:none;
+    min-height:100vh;
+    background:#f4f7fb;
+    padding:35px;
+}
+
+.student-container{
+    max-width:950px;
+    margin:auto;
+}
+
+.student-header{
+    background:#2563eb;
+    color:white;
+    padding:25px;
+    border-radius:12px;
+    margin-bottom:20px;
+}
+
+.exam-card{
+    background:white;
+    padding:30px;
+    border-radius:12px;
+    box-shadow:0 4px 15px rgba(0,0,0,.08);
+}
+
+.exam-details{
+    display:grid;
+    grid-template-columns:repeat(2,1fr);
+    gap:15px;
+    margin:25px 0;
+}
+
+.exam-info{
+    background:#f3f4f6;
+    padding:18px;
+    border-radius:8px;
+}
+
+.start-exam{
+    width:100%;
+    padding:15px;
+    border:0;
+    border-radius:8px;
+    background:#16a34a;
+    color:white;
+    font-size:16px;
+    font-weight:bold;
+}
+
+.student-logout{
+    width:100%;
+    padding:13px;
+    margin-top:10px;
+    border:0;
+    border-radius:8px;
+    background:#dc2626;
+    color:white;
+}
+
+/* ================= EXAM ================= */
+
+.exam-top{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    background:white;
+    padding:20px;
+    border-radius:12px;
+    margin-bottom:20px;
+    box-shadow:0 3px 12px rgba(0,0,0,.06);
+}
+
+.timer{
+    background:#fee2e2;
+    color:#dc2626;
+    padding:12px 20px;
+    border-radius:8px;
+    font-weight:bold;
+    font-size:18px;
+}
+
+.proctor-status{
+    background:#dcfce7;
+    color:#166534;
+    padding:10px 15px;
+    border-radius:8px;
+    font-size:13px;
+    margin-top:8px;
+}
+
+.question{
+    background:white;
+    padding:28px;
+    border-radius:12px;
+    margin-bottom:20px;
+    box-shadow:0 3px 12px rgba(0,0,0,.06);
+}
+
+.question h3{
+    margin-bottom:20px;
+    line-height:1.5;
+}
+
+.option{
+    display:block;
+    padding:13px;
+    margin:9px 0;
+    background:#f8fafc;
+    border-radius:7px;
+    cursor:pointer;
+}
+
+.option:hover{
+    background:#eff6ff;
+}
+
+.option input{
+    margin-right:10px;
+}
+
+.exam-buttons{
+    display:flex;
+    gap:12px;
+    margin-top:20px;
+}
+
+.previous-btn,
+.next-btn,
+.logout-exam{
+    flex:1;
+    padding:15px;
+    border:0;
+    border-radius:8px;
+    color:white;
+    font-weight:bold;
+}
+
+.previous-btn{
+    background:#6b7280;
+}
+
+.next-btn{
+    background:#2563eb;
+}
+
+.logout-exam{
+    background:#dc2626;
+}
+
+.progress-container{
+    background:#e5e7eb;
+    height:8px;
+    border-radius:10px;
+    margin:15px 0 5px;
+}
+
+.progress-bar{
+    height:8px;
+    width:2.5%;
+    background:#2563eb;
+    border-radius:10px;
+    transition:.3s;
+}
+
+/* ================= RESULT ================= */
+
+.result-box{
+    background:white;
+    padding:40px;
+    border-radius:15px;
+    text-align:center;
+    box-shadow:0 5px 20px rgba(0,0,0,.1);
+}
+
+.result-icon{
+    font-size:60px;
+    margin-bottom:15px;
+}
+
+.result-score{
+    font-size:50px;
+    color:#2563eb;
+    font-weight:bold;
+    margin:20px;
+}
+
+.result-info{
+    background:#f3f4f6;
+    padding:15px;
+    border-radius:8px;
+    margin:10px 0;
+}
+
+
+/* Shared proctoring notifications */
+.notification-panel{background:#fff;border-radius:12px;padding:20px;margin:18px 0;box-shadow:0 3px 12px rgba(0,0,0,.06)}
+.notification-panel h3{margin-bottom:12px}
+.notification-item{padding:12px;margin:8px 0;border-radius:8px;background:#fff7ed;border-left:4px solid #ea580c;font-size:14px;line-height:1.5}
+.notification-item strong{display:block;margin-bottom:3px}
+.setting-status-list{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin-top:12px}
+.setting-status{background:#f3f4f6;padding:12px;border-radius:8px;font-size:14px}
+.status-on{color:#15803d;font-weight:bold}.status-off{color:#b91c1c;font-weight:bold}
+.student-profile-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px;margin:20px 0}
+.student-profile-card{display:flex;align-items:center;gap:12px;background:#fff;border:1px solid #e5e7eb;border-radius:12px;padding:16px;box-shadow:0 3px 10px rgba(0,0,0,.04);min-width:0}
+.profile-card-icon{font-size:26px;background:#eff6ff;border-radius:10px;padding:10px}
+.profile-label{margin:0 0 5px;color:#6b7280;font-size:12px}
+.student-profile-card h3{margin:0;font-size:16px;overflow-wrap:anywhere}
+.student-alert-panel{border-left:4px solid #f59e0b}
+.notification-item{display:flex;flex-direction:column;gap:5px;padding:12px;margin:10px 0;background:#fff;border:1px solid #e5e7eb;border-radius:9px}
+.notification-item strong{color:#92400e}
+.notification-item .notification-meta{font-size:12px;color:#6b7280}
+@media(max-width:900px){.student-profile-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:520px){.student-profile-grid{grid-template-columns:1fr}}
+.live-proctor-panel{background:#fff;border:1px solid #dbeafe;border-radius:14px;padding:18px;margin:18px 0;box-shadow:0 4px 14px rgba(15,23,42,.06)}
+.live-proctor-heading{display:flex;justify-content:space-between;align-items:flex-start;gap:12px;margin-bottom:14px}
+.live-proctor-heading h3{margin:0 0 5px}.live-proctor-heading p{margin:0;color:#64748b;font-size:13px}
+.live-proctor-badge{white-space:nowrap;border-radius:999px;padding:7px 10px;background:#fef3c7;color:#92400e;font-size:12px;font-weight:700}
+.live-proctor-content{display:grid;grid-template-columns:minmax(180px,300px) 1fr;gap:16px;align-items:center}
+#proctorCamera{width:100%;aspect-ratio:4/3;object-fit:cover;background:#111827;border-radius:10px;transform:scaleX(-1)}
+.live-proctor-checks p{padding:10px 12px;border-radius:8px;background:#f8fafc;margin:7px 0;font-size:14px}
+.proctor-privacy-note{font-size:12px;color:#64748b;margin:12px 0 0;line-height:1.5}
+@media(max-width:600px){.live-proctor-content{grid-template-columns:1fr}.live-proctor-heading{flex-direction:column}}
+.demo-alert-controls{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}
+.demo-alert-controls button{padding:10px 12px;border:0;border-radius:7px;background:#fef3c7;color:#92400e;font-weight:bold}
+#studentToast{display:none;position:fixed;right:20px;top:20px;z-index:9999;max-width:360px;background:#111827;color:white;padding:16px 18px;border-radius:10px;box-shadow:0 8px 25px rgba(0,0,0,.25);line-height:1.5}
+@media(max-width:700px){.setting-status-list{grid-template-columns:1fr}#studentToast{left:12px;right:12px;top:12px}}
+
+@media(max-width:900px){
+
+    .cards{
+        grid-template-columns:repeat(2,1fr);
+    }
+
+    .report-grid{
+        grid-template-columns:1fr;
+    }
+}
+
+@media(max-width:700px){
+
+    .sidebar{
+        width:190px;
+    }
+
+    .main{
+        margin-left:190px;
+    }
+
+    .form-grid{
+        grid-template-columns:1fr;
+    }
+
+    .form-group.full{
+        grid-column:span 1;
+    }
+
+    .cards{
+        grid-template-columns:1fr;
+    }
+
+    .exam-top{
+        flex-direction:column;
+        gap:15px;
+    }
+
+    .exam-buttons{
+        flex-direction:column;
+    }
+}
+
+</style>
+</head>
+
+<body>
+<div id="studentToast" role="status" aria-live="polite"></div>
+
+<!-- =====================================================
+LOGIN
+===================================================== -->
+
+<div class="login-page" id="loginPage">
+
+<div class="login-box">
+
+<div class="login-logo">🤖</div>
+
+<h1>AI Proctor</h1>
+
+<p class="subtitle">
+Online Examination Proctoring & Academic Integrity System
+</p>
+
+<div class="role-buttons">
+
+<button id="studentRole"
+class="active"
+onclick="selectRole('student')">
+👨‍🎓 Student
+</button>
+
+<button id="adminRole"
+onclick="selectRole('admin')">
+👨‍💼 Admin
+</button>
+
+</div>
+
+<div class="input-group">
+
+<label id="idLabel">Student ID</label>
+
+<input
+type="text"
+id="loginId"
+placeholder="Enter Student ID">
+
+</div>
+
+<div class="input-group">
+
+<label>Password</label>
+
+<input
+type="password"
+id="loginPassword"
+placeholder="Enter Password">
+
+</div>
+
+<button class="login-btn" onclick="login()">
+Login
+</button>
+
+<div id="loginMessage" class="message"></div>
+
+<div class="register-link" onclick="openRegistration()">
+New user? Create an account
+</div>
+
+<div class="demo-box">
+
+<b>Demo Login</b><br>
+
+Student 1:
+<b>STU001</b> / <b>student123</b><br>
+
+Student 2:
+<b>STU002</b> / <b>student123</b><br>
+
+Student 3:
+<b>STU003</b> / <b>student123</b><br>
+
+Admin:
+<b>ADMIN001</b> / <b>admin123</b>
+
+</div>
+
+</div>
+</div>
+
+
+<!-- =====================================================
+STUDENT REGISTRATION
+===================================================== -->
+
+<div class="registration-page" id="studentRegistration">
+
+<div class="form-container">
+
+<h1>👨‍🎓 Student Registration</h1>
+
+<p class="description">
+Enter your details to participate in the examination.
+</p>
+
+<div class="form-grid">
+
+<div class="form-group">
+<label>Student ID</label>
+<input id="regStudentId" type="text" placeholder="STU004">
+</div>
+
+<div class="form-group">
+<label>Full Name</label>
+<input id="regStudentName" type="text" placeholder="Enter Full Name">
+</div>
+
+<div class="form-group">
+<label>Email</label>
+<input type="email" placeholder="student@email.com">
+</div>
+
+<div class="form-group">
+<label>Phone Number</label>
+<input type="tel" placeholder="Phone Number">
+</div>
+
+<div class="form-group">
+<label>Gender</label>
+
+<select id="regGender">
+
+<option value="">Select Gender</option>
+<option>Male</option>
+<option>Female</option>
+<option>Other</option>
+
+</select>
+
+</div>
+
+<div class="form-group">
+<label>Date of Birth</label>
+<input type="date">
+</div>
+
+<div class="form-group">
+<label>Department</label>
+
+<select>
+
+<option>CSE</option>
+<option>AI</option>
+<option>IT</option>
+
+</select>
+
+</div>
+
+<div class="form-group">
+<label>Year</label>
+
+<select>
+
+<option>I Year</option>
+<option>II Year</option>
+<option>III Year</option>
+<option>IV Year</option>
+
+</select>
+
+</div>
+
+<div class="form-group full">
+<label>Password</label>
+<input type="password" placeholder="Create Password">
+</div>
+
+</div>
+
+<button class="submit-btn" onclick="studentRegister()">
+Register Student
+</button>
+
+<button class="back-btn" onclick="backToLogin()">
+← Back to Login
+</button>
+
+</div>
+</div>
+
+
+<!-- =====================================================
+ADMIN REGISTRATION
+===================================================== -->
+
+<div class="registration-page" id="adminRegistration">
+
+<div class="form-container">
+
+<h1>👨‍💼 Admin Registration</h1>
+
+<p class="description">
+Register a new administrator.
+</p>
+
+<div class="form-grid">
+
+<div class="form-group">
+<label>Admin ID</label>
+<input id="regAdminId" type="text" placeholder="ADMIN002">
+</div>
+
+<div class="form-group">
+<label>Full Name</label>
+<input type="text" placeholder="Admin Name">
+</div>
+
+<div class="form-group">
+<label>Official Email</label>
+<input type="email" placeholder="admin@college.com">
+</div>
+
+<div class="form-group">
+<label>Phone Number</label>
+<input type="tel" placeholder="Phone Number">
+</div>
+
+<div class="form-group">
+<label>Department</label>
+
+<select>
+<option>CSE</option>
+<option>AI</option>
+<option>IT</option>
+</select>
+
+</div>
+
+<div class="form-group">
+<label>Password</label>
+<input type="password" placeholder="Create Password">
+</div>
+
+</div>
+
+<button class="submit-btn" onclick="adminRegister()">
+Register Admin
+</button>
+
+<button class="back-btn" onclick="backToLogin()">
+← Back to Login
+</button>
+
+</div>
+</div>
+
+
+<!-- =====================================================
+ADMIN DASHBOARD
+===================================================== -->
+
+<div class="dashboard" id="adminDashboard">
+
+<div class="sidebar">
+
+<div class="logo">
+
+<h2>🤖 AI Proctor</h2>
+
+<p>Academic Integrity System</p>
+
+</div>
+
+<div class="menu">
+
+<a class="active"
+onclick="showPage('dashboard',this)">
+📊 Dashboard
+</a>
+
+<a onclick="showPage('examinations',this)">
+📝 Examinations
+</a>
+
+<a onclick="showPage('students',this)">
+👨‍🎓 Students
+</a>
+
+<a onclick="showPage('participation',this)">
+👥 Participation
+</a>
+
+<a onclick="showPage('alerts',this)">
+🚨 AI Alerts
+</a>
+
+<a onclick="showPage('reports',this)">
+📈 Reports
+</a>
+
+<a onclick="showPage('settings',this)">
+⚙️ Settings
+</a>
+
+<a class="logout" onclick="logout()">
+🚪 Logout
+</a>
+
+</div>
+</div>
+
+
+<div class="main">
+
+
+<!-- DASHBOARD -->
+
+<div id="dashboard" class="page active">
+
+<div class="header">
+
+<div>
+<h1>📊 Dashboard</h1>
+<p>AI-Based Online Examination Proctoring System</p>
+</div>
+
+<div class="admin-profile">
+👨‍💼 Admin
+</div>
+
+</div>
+
+<div class="welcome">
+
+<h2>Welcome to AI Proctoring System</h2>
+
+<p>
+Monitor online examinations, student participation,
+academic integrity and AI-based proctoring alerts.
+</p>
+
+</div>
+
+<div class="cards">
+
+<div class="card">
+<div class="card-icon">📝</div>
+<p>Total Examinations</p>
+<h2 class="blue">156</h2>
+</div>
+
+<div class="card">
+<div class="card-icon">👨‍🎓</div>
+<p>Registered Students</p>
+<h2 class="green">4823</h2>
+</div>
+
+<div class="card">
+<div class="card-icon">✅</div>
+<p>Completed Exams</p>
+<h2 class="orange">148</h2>
+</div>
+
+<div class="card">
+<div class="card-icon">🛡️</div>
+<p>Integrity Score</p>
+<h2 class="blue">92%</h2>
+</div>
+
+</div>
+
+<div class="content-box">
+
+<h2>Today's Examination</h2>
+
+<table>
+
+<tr>
+<th>Examination</th>
+<th>Students</th>
+<th>Status</th>
+<th>Integrity</th>
+</tr>
+
+<tr>
+<td>Python Programming</td>
+<td>120</td>
+<td><span class="badge normal">Ongoing</span></td>
+<td>94%</td>
+</tr>
+
+<tr>
+<td>Cloud Computing</td>
+<td>95</td>
+<td><span class="badge warning">Scheduled</span></td>
+<td>--</td>
+</tr>
+
+</table>
+
+</div>
+
+</div>
+
+
+<!-- EXAMINATIONS -->
+
+<div id="examinations" class="page">
+
+<div class="header">
+
+<div>
+<h1>📝 Examinations</h1>
+<p>Manage examinations</p>
+</div>
+
+</div>
+
+<div class="content-box">
+
+<h2>Examination List</h2>
+
+<table>
+
+<tr>
+<th>Exam ID</th>
+<th>Examination</th>
+<th>Duration</th>
+<th>Participants</th>
+<th>Status</th>
+</tr>
+
+<tr>
+<td>EX001</td>
+<td>Python Programming</td>
+<td>10 Minutes</td>
+<td>120</td>
+<td><span class="badge normal">Ongoing</span></td>
+</tr>
+
+<tr>
+<td>EX002</td>
+<td>Cloud Computing</td>
+<td>10 Minutes</td>
+<td>95</td>
+<td><span class="badge warning">Scheduled</span></td>
+</tr>
+
+</table>
+
+</div>
+
+</div>
+
+
+<!-- STUDENTS -->
+
+<div id="students" class="page">
+
+<div class="header">
+
+<div>
+<h1>👨‍🎓 Students</h1>
+<p>Registered students</p>
+</div>
+
+</div>
+
+<div class="content-box">
+
+<h2>Student Details</h2>
+
+<table>
+
+<tr>
+<th>ID</th>
+<th>Name</th>
+<th>Gender</th>
+<th>Question Set</th>
+<th>Status</th>
+</tr>
+
+<tr>
+<td>STU001</td>
+<td>Rahul</td>
+<td>Male</td>
+<td>Set A</td>
+<td><span class="badge normal">Active</span></td>
+</tr>
+
+<tr>
+<td>STU002</td>
+<td>Priya</td>
+<td>Female</td>
+<td>Set B</td>
+<td><span class="badge normal">Active</span></td>
+</tr>
+
+<tr>
+<td>STU003</td>
+<td>Arjun</td>
+<td>Male</td>
+<td>Set C</td>
+<td><span class="badge warning">Review</span></td>
+</tr>
+
+</table>
+
+</div>
+
+</div>
+
+
+<!-- PARTICIPATION -->
+
+<div id="participation" class="page">
+
+<div class="header">
+
+<div>
+<h1>👥 Participation</h1>
+<p>Gender-wise examination participation</p>
+</div>
+
+</div>
+
+<div class="report-grid">
+
+<div class="report-card">
+<h3>Total Participants</h3>
+<h2>4823</h2>
+<p>Students</p>
+</div>
+
+<div class="report-card">
+<h3>👨 Boys</h3>
+<h2 class="blue">2790</h2>
+<p>Male Participants</p>
+</div>
+
+<div class="report-card">
+<h3>👩 Girls</h3>
+<h2 class="green">2033</h2>
+<p>Female Participants</p>
+</div>
+
+</div>
+
+<br>
+
+<div class="content-box">
+
+<h2>Participation Details</h2>
+
+<table>
+
+<tr>
+<th>Category</th>
+<th>Participants</th>
+<th>Percentage</th>
+</tr>
+
+<tr>
+<td>Boys</td>
+<td>2790</td>
+<td>57.85%</td>
+</tr>
+
+<tr>
+<td>Girls</td>
+<td>2033</td>
+<td>42.15%</td>
+</tr>
+
+</table>
+
+</div>
+
+</div>
+
+
+<!-- ALERTS -->
+
+<div id="alerts" class="page">
+
+<div class="header">
+
+<div>
+<h1>🚨 AI Proctoring Alerts</h1>
+<p>Suspicious activity monitoring</p>
+</div>
+
+</div>
+
+<div class="content-box">
+
+<h2>Recent Alerts</h2>
+
+<table>
+
+<tr>
+<th>Student</th>
+<th>Alert</th>
+<th>Time</th>
+<th>Severity</th>
+</tr>
+<tbody id="alertRows"><tr><td colspan="4">No new alerts. Alerts will appear here during an exam.</td></tr></tbody>
+
+</table>
+
+</div>
+
+</div>
+
+
+<!-- REPORTS -->
+
+<div id="reports" class="page">
+
+<div class="header">
+
+<div>
+<h1>📈 Reports</h1>
+<p>Examination analytics</p>
+</div>
+
+</div>
+
+<div class="report-grid">
+
+<div class="report-card">
+<h3>Average Score</h3>
+<h2>78%</h2>
+</div>
+
+<div class="report-card">
+<h3>Integrity Score</h3>
+<h2>92%</h2>
+</div>
+
+<div class="report-card">
+<h3>Suspicious Cases</h3>
+<h2 class="red">18</h2>
+</div>
+
+</div>
+
+</div>
+
+
+<!-- SETTINGS -->
+
+<div id="settings" class="page">
+
+<div class="header">
+
+<div>
+<h1>⚙️ Settings</h1>
+<p>AI Proctoring Configuration</p>
+</div>
+
+</div>
+
+<div class="content-box">
+
+<h2>AI Proctoring Settings</h2>
+
+<div class="setting-row">
+
+<div class="setting-info">
+
+<h3>📷 Face Detection</h3>
+
+<p>
+Detect student's face during examination.
+</p>
+
+</div>
+
+<label class="switch">
+
+<input type="checkbox"
+checked
+onchange="settingChanged('Face Detection',this)">
+
+<span class="slider"></span>
+
+</label>
+
+</div>
+
+
+<div class="setting-row">
+
+<div class="setting-info">
+
+<h3>👥 Multiple Face Detection</h3>
+
+<p>
+Detect additional people in camera.
+</p>
+
+</div>
+
+<label class="switch">
+
+<input type="checkbox"
+checked
+onchange="settingChanged('Multiple Face Detection',this)">
+
+<span class="slider"></span>
+
+</label>
+
+</div>
+
+
+<div class="setting-row">
+
+<div class="setting-info">
+
+<h3>👁️ Eye Movement Detection</h3>
+
+<p>
+Monitor unusual eye movement.
+</p>
+
+</div>
+
+<label class="switch">
+
+<input type="checkbox"
+checked
+onchange="settingChanged('Eye Movement Detection',this)">
+
+<span class="slider"></span>
+
+</label>
+
+</div>
+
+
+<div class="setting-row">
+
+<div class="setting-info">
+
+<h3>🎤 Audio Monitoring</h3>
+
+<p>
+Detect unusual audio activity.
+</p>
+
+</div>
+
+<label class="switch">
+
+<input type="checkbox"
+checked
+onchange="settingChanged('Audio Monitoring',this)">
+
+<span class="slider"></span>
+
+</label>
+
+</div>
+
+
+<div class="setting-row">
+
+<div class="setting-info">
+
+<h3>🖥️ Screen Monitoring</h3>
+
+<p>
+Monitor tab switching.
+</p>
+
+</div>
+
+<label class="switch">
+
+<input type="checkbox"
+checked
+onchange="settingChanged('Screen Monitoring',this)">
+
+<span class="slider"></span>
+
+</label>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+</div>
+
+
+<!-- =====================================================
+STUDENT PORTAL
+===================================================== -->
+
+<div class="student-page" id="studentPage">
+
+<div class="student-container">
+
+<div class="student-header">
+
+<h1>👨‍🎓 Student Dashboard</h1>
+
+<p id="studentWelcome">
+Welcome Student
+</p>
+
+</div>
+
+<div class="student-profile-grid">
+  <div class="student-profile-card"><div class="profile-card-icon">👤</div><div><p class="profile-label">Student Name</p><h3 id="studentProfileName">Student</h3></div></div>
+  <div class="student-profile-card"><div class="profile-card-icon">🪪</div><div><p class="profile-label">Student ID</p><h3 id="studentProfileId">—</h3></div></div>
+  <div class="student-profile-card"><div class="profile-card-icon">📝</div><div><p class="profile-label">Question Set</p><h3 id="studentProfileSet">—</h3></div></div>
+  <div class="student-profile-card"><div class="profile-card-icon">🛡️</div><div><p class="profile-label">Proctoring Status</p><h3><span class="status-on">● Admin Monitoring</span></h3></div></div>
+</div>
+
+<div class="notification-panel" style="display:none;">
+<h3>⚙️ Proctoring Settings</h3>
+<p>These monitoring settings are controlled by the administrator. You can view their status here.</p>
+<div id="studentSettingStatuses" class="setting-status-list"></div>
+<div class="demo-alert-controls">
+<button onclick="triggerDemoAlert('Multiple faces reported','High')">Test multiple-face alert</button>
+<button onclick="triggerDemoAlert('Suspicious eye movement reported','Medium')">Test eye-movement alert</button>
+<button onclick="triggerDemoAlert('Unusual audio activity reported','Medium')">Test audio alert</button>
+</div>
+<p style="margin-top:10px;color:#6b7280;font-size:12px">Demo buttons simulate alerts only; they do not perform real AI detection.</p>
+</div>
+
+<div class="exam-card">
+
+<h2>Python Programming Examination</h2>
+
+<p>
+You will receive a different set of questions based on your Student ID.
+</p>
+
+<div class="exam-details">
+
+<div class="exam-info">
+<b>Student ID</b><br><br>
+<span id="displayStudentId"></span>
+</div>
+
+<div class="exam-info">
+<b>Examination</b><br><br>
+Python Programming
+</div>
+
+<div class="exam-info">
+<b>Duration</b><br><br>
+<strong>10 Minutes</strong>
+</div>
+
+<div class="exam-info">
+<b>Questions</b><br><br>
+40 Questions
+</div>
+
+<div class="exam-info">
+<b>AI Monitoring</b><br><br>
+Enabled
+</div>
+
+<div class="exam-info">
+<b>Question Set</b><br><br>
+<span id="displayQuestionSet"></span>
+</div>
+
+</div>
+
+<button class="start-exam" onclick="startExam()">
+🚀 Start Examination
+</button>
+
+<button class="student-logout" onclick="logout()">
+🚪 Logout
+</button>
+
+</div>
+
+</div>
+
+</div>
+
+
+<!-- =====================================================
+EXAM PAGE
+===================================================== -->
+
+<div class="student-page" id="examPage">
+
+<div class="student-container">
+
+<div class="exam-top">
+
+<div>
+
+<h2>📝 Python Programming Exam</h2>
+
+<p>
+Student ID:
+<span id="examStudentId"></span>
+</p>
+
+</div>
+
+<div>
+
+<div class="timer" id="timer">
+Time Left: 10:00
+</div>
+
+<div class="proctor-status">
+🟢 AI Proctoring Active
+</div>
+
+</div>
+
+</div>
+
+
+<div class="live-proctor-panel">
+  <div class="live-proctor-heading">
+    <div><h3>📷 Live Camera & 🎙️ Microphone</h3><p>Keep your face visible and stay in a quiet environment during the exam.</p></div>
+    <span id="liveProctorStatus" class="live-proctor-badge">Not started</span>
+  </div>
+  <div class="live-proctor-content">
+    <video id="proctorCamera" autoplay muted playsinline></video>
+    <div class="live-proctor-checks">
+      <p id="cameraStatus">📷 Camera: waiting for permission</p>
+      <p id="faceStatus">👥 Face detection: waiting to start</p>
+      <p id="micStatus">🎙️ Microphone: waiting for permission</p>
+      <p id="tabStatus">🖥️ Exam focus: stay on this exam tab</p>
+    </div>
+  </div>
+  <p class="proctor-privacy-note">Camera and microphone are used only while this exam is running in this demo. Your browser will ask for permission. Monitoring depends on browser support and the face-detection model loading successfully.</p>
+</div>
+
+<div class="notification-panel">
+<h3>🔔 Proctoring Notifications</h3>
+<div id="examNotifications"><p>No alerts for this exam.</p></div>
+<div class="demo-alert-controls">
+<button onclick="triggerDemoAlert('Suspicious eye movement reported','Medium')">Simulate eye alert</button>
+<button onclick="triggerDemoAlert('Multiple faces reported','High')">Simulate multiple-face alert</button>
+</div>
+<p style="margin-top:8px;color:#6b7280;font-size:12px">These are demonstration triggers, not real AI detection.</p>
+</div>
+
+<div class="content-box"
+style="margin-bottom:20px;">
+
+<h3 id="questionNumber">
+Question 1 of 40
+</h3>
+
+<div class="progress-container">
+
+<div class="progress-bar" id="progressBar"></div>
+
+</div>
+
+</div>
+
+
+<div id="questionArea"></div>
+
+
+<div class="exam-buttons">
+
+<button class="previous-btn"
+id="previousButton"
+onclick="previousQuestion()">
+
+← Previous
+
+</button>
+
+<button class="next-btn"
+id="nextButton"
+onclick="nextQuestion()">
+
+Next →
+
+</button>
+
+<button class="logout-exam"
+onclick="logoutDuringExam()">
+
+🚪 Logout
+
+</button>
+
+</div>
+
+</div>
+
+</div>
+
+
+<!-- =====================================================
+RESULT
+===================================================== -->
+
+<div class="student-page" id="resultPage">
+
+<div class="student-container">
+
+<div class="result-box">
+
+<div class="result-icon">🎉</div>
+
+<h1>Examination Completed</h1>
+
+<p>
+Your examination has been submitted successfully.
+</p>
+
+<div class="result-score" id="resultScore">
+0 / 40
+</div>
+
+<div class="result-info">
+Student ID:
+<b id="resultStudentId"></b>
+</div>
+
+<div class="result-info">
+Question Set:
+<b id="resultSet"></b>
+</div>
+
+<div class="result-info">
+Duration:
+<b>10 Minutes</b>
+</div>
+
+<div class="result-info">
+Status:
+<b>Submitted</b>
+</div>
+
+<br>
+
+<button class="login-btn"
+onclick="backToLoginAfterResult()">
+
+Back to Login
+
+</button>
+
+</div>
+
+</div>
+
+</div>
+
+
+<script src="https://cdn.jsdelivr.net/npm/@mediapipe/face_detection/face_detection.js" crossorigin="anonymous"></script>
+<script>
+
+/* =====================================================
+LOGIN VARIABLES
+===================================================== */
+
+let currentRole = "student";
+
+let loggedInStudent = "";
+
+
+/* =====================================================
+EXAM VARIABLES
+===================================================== */
+
+let currentQuestion = 0;
+
+let studentQuestions = [];
+
+let examTimer;
+
+let totalSeconds = 10 * 60;
+
+// Live proctoring resources; stopped when the exam ends.
+let proctorStream = null;
+let proctorFaceDetector = null;
+let proctorAnimationFrame = null;
+let proctorAudioContext = null;
+let proctorAudioFrame = null;
+let lastVoiceAlertAt = 0;
+let lastFaceAlertAt = 0;
+let tabSwitchCount = 0;
+let examIsRunning = false;
+
+
+/* =====================================================
+QUESTION BANK
+
+There are MORE than 40 questions.
+
+Each student gets 40 questions
+selected automatically according
+to their Student ID.
+
+===================================================== */
+
+const questionBank = [
+
+{
+q:"Which keyword is used to define a function in Python?",
+o:["function","def","define","fun"],
+a:"def"
+},
+
+{
+q:"Which function is used to display output?",
+o:["show()","display()","print()","output()"],
+a:"print()"
+},
+
+{
+q:"Which data type stores whole numbers?",
+o:["float","string","int","list"],
+a:"int"
+},
+
+{
+q:"Which symbol is used for comments in Python?",
+o:["//","#","/*","--"],
+a:"#"
+},
+
+{
+q:"Which keyword is used for a condition?",
+o:["if","when","check","condition"],
+a:"if"
+},
+
+{
+q:"Which keyword is used when an if condition is false?",
+o:["otherwise","else","false","no"],
+a:"else"
+},
+
+{
+q:"Which collection uses square brackets?",
+o:["tuple","set","list","dictionary"],
+a:"list"
+},
+
+{
+q:"Which collection uses parentheses?",
+o:["list","tuple","set","dictionary"],
+a:"tuple"
+},
+
+{
+q:"Which collection stores key-value pairs?",
+o:["list","tuple","dictionary","set"],
+a:"dictionary"
+},
+
+{
+q:"Which keyword creates a class?",
+o:["object","class","create","struct"],
+a:"class"
+},
+
+{
+q:"Which operator checks equality?",
+o:["=","==","!=","=>"],
+a:"=="
+},
+
+{
+q:"Which operator means not equal?",
+o:["<>","!=","==","not="],
+a:"!="
+},
+
+{
+q:"Which function returns the length of an object?",
+o:["size()","count()","len()","length()"],
+a:"len()"
+},
+
+{
+q:"Which keyword exits a loop?",
+o:["stop","exit","break","end"],
+a:"break"
+},
+
+{
+q:"Which keyword skips the current loop iteration?",
+o:["skip","continue","pass","next"],
+a:"continue"
+},
+
+{
+q:"Which keyword does nothing when executed?",
+o:["nothing","skip","pass","empty"],
+a:"pass"
+},
+
+{
+q:"Which function converts a value to integer?",
+o:["integer()","int()","number()","convert()"],
+a:"int()"
+},
+
+{
+q:"Which function converts a value to string?",
+o:["string()","str()","text()","convert()"],
+a:"str()"
+},
+
+{
+q:"Which function converts a value to float?",
+o:["float()","decimal()","double()","number()"],
+a:"float()"
+},
+
+{
+q:"Which keyword imports a module?",
+o:["include","import","using","module"],
+a:"import"
+},
+
+{
+q:"Which keyword starts exception handling?",
+o:["try","test","check","catch"],
+a:"try"
+},
+
+{
+q:"Which block handles an exception?",
+o:["catch","except","error","handle"],
+a:"except"
+},
+
+{
+q:"Which function returns the largest value?",
+o:["large()","maximum()","max()","highest()"],
+a:"max()"
+},
+
+{
+q:"Which function returns the smallest value?",
+o:["small()","minimum()","min()","lowest()"],
+a:"min()"
+},
+
+{
+q:"Which function returns absolute value?",
+o:["absolute()","abs()","positive()","value()"],
+a:"abs()"
+},
+
+{
+q:"What type does input() return by default?",
+o:["int","float","string","boolean"],
+a:"string"
+},
+
+{
+q:"Which method adds an item to a list?",
+o:["add()","append()","insertEnd()","push()"],
+a:"append()"
+},
+
+{
+q:"Which method removes an item from a list?",
+o:["delete()","remove()","erase()","clearItem()"],
+a:"remove()"
+},
+
+{
+q:"Which method sorts a list?",
+o:["sort()","order()","arrange()","sorting()"],
+a:"sort()"
+},
+
+{
+q:"Which function returns the type of an object?",
+o:["datatype()","type()","typeof()","objectType()"],
+a:"type()"
+},
+
+{
+q:"Which value represents True in Python?",
+o:["true","TRUE","True","1"],
+a:"True"
+},
+
+{
+q:"Which value represents False in Python?",
+o:["false","FALSE","False","0"],
+a:"False"
+},
+
+{
+q:"Which operator performs integer division?",
+o:["/","//","%","**"],
+a:"//"
+},
+
+{
+q:"Which operator returns the remainder?",
+o:["/","//","%","**"],
+a:"%"
+},
+
+{
+q:"Which keyword returns a value from a function?",
+o:["send","return","give","output"],
+a:"return"
+},
+
+{
+q:"Which function creates a sequence of numbers?",
+o:["numbers()","range()","sequence()","series()"],
+a:"range()"
+},
+
+{
+q:"Which loop is commonly used when the number of iterations is known?",
+o:["while","for","repeat","do"],
+a:"for"
+},
+
+{
+q:"Which loop continues while a condition is true?",
+o:["for","while","repeat","loop"],
+a:"while"
+},
+
+{
+q:"Which operator performs addition?",
+o:["-","+","*","/"],
+a:"+"
+},
+
+{
+q:"Which operator performs multiplication?",
+o:["-","+","*","/"],
+a:"*"
+},
+
+{
+q:"Which operator performs division?",
+o:["-","+","*","/"],
+a:"/"
+},
+
+{
+q:"Which operator performs subtraction?",
+o:["-","+","*","/"],
+a:"-"
+},
+
+{
+q:"Which symbol is used to access a list index?",
+o:["{}","[]","()","<>"],
+a:"[]"
+},
+
+{
+q:"What is the first index of a Python list?",
+o:["0","1","-1","10"],
+a:"0"
+},
+
+{
+q:"Which method removes all items from a list?",
+o:["delete()","removeAll()","clear()","empty()"],
+a:"clear()"
+},
+
+{
+q:"Which method inserts an item at a specific position?",
+o:["insert()","add()","place()","put()"],
+a:"insert()"
+},
+
+{
+q:"Which method reverses a list?",
+o:["reverse()","back()","flip()","turn()"],
+a:"reverse()"
+},
+
+{
+q:"Which function returns the sum of values?",
+o:["total()","sum()","add()","plus()"],
+a:"sum()"
+},
+
+{
+q:"Which function returns the rounded value?",
+o:["round()","rounded()","approx()","integer()"],
+a:"round()"
+},
+
+{
+q:"Which keyword is used to create an anonymous function?",
+o:["anonymous","lambda","function","small"],
+a:"lambda"
+},
+
+{
+q:"Which keyword is used to define an exception?",
+o:["raise","throw","error","exception"],
+a:"raise"
+},
+
+{
+q:"Which keyword is used to create an iterator?",
+o:["yield","iterate","iterator","next"],
+a:"yield"
+},
+
+{
+q:"Which file mode is used to read a file?",
+o:["w","r","a","x"],
+a:"r"
+},
+
+{
+q:"Which file mode is used to write to a file?",
+o:["r","w","a","read"],
+a:"w"
+},
+
+{
+q:"Which file mode is used to append data?",
+o:["r","w","a","x"],
+a:"a"
+},
+
+{
+q:"Which function opens a file?",
+o:["file()","open()","readFile()","load()"],
+a:"open()"
+},
+
+{
+q:"Which keyword is used with files to automatically close them?",
+o:["with","auto","close","using"],
+a:"with"
+},
+
+{
+q:"Which module is commonly used to generate random numbers?",
+o:["random","number","maths","generate"],
+a:"random"
+},
+
+{
+q:"Which module provides mathematical functions?",
+o:["math","mathematics","number","calculate"],
+a:"math"
+},
+
+{
+q:"Which function returns a random integer?",
+o:["random.int()","random.randint()","rand()","integer.random()"],
+a:"random.randint()"
+}
+
+];
+
+
+/* =====================================================
+QUESTION SET GENERATOR
+
+Different Student IDs generate
+different question orders/selections.
+===================================================== */
+
+function generateQuestions(studentId){
+
+    let array=[...questionBank];
+
+    let seed=0;
+
+    for(let i=0;i<studentId.length;i++){
+
+        seed += studentId.charCodeAt(i);
+
+    }
+
+    /*
+       Deterministic shuffle.
+       Same student gets same set if they
+       start again, while different IDs
+       get different sets.
+    */
+
+    for(let i=array.length-1;i>0;i--){
+
+        seed=(seed*9301+49297)%233280;
+
+        let j=Math.floor(
+            (seed/233280)*(i+1)
+        );
+
+        [array[i],array[j]]
+        =[array[j],array[i]];
+
+    }
+
+    /*
+       Select exactly 40 questions.
+    */
+
+    return array.slice(0,40).map(item=>({
+
+        question:item.q,
+
+        options:item.o,
+
+        answer:item.a
+
+    }));
+
+}
+
+
+/* =====================================================
+QUESTION SET NAME
+===================================================== */
+
+function getQuestionSetName(studentId){
+
+    let number=0;
+
+    for(let i=0;i<studentId.length;i++){
+
+        number += studentId.charCodeAt(i);
+
+    }
+
+    let sets=["Set A","Set B","Set C","Set D","Set E"];
+
+    return sets[number % sets.length];
+
+}
+
+
+/* =====================================================
+ROLE
+===================================================== */
+
+function selectRole(role){
+
+    currentRole=role;
+
+    let studentButton=
+        document.getElementById("studentRole");
+
+    let adminButton=
+        document.getElementById("adminRole");
+
+    let label=
+        document.getElementById("idLabel");
+
+    let input=
+        document.getElementById("loginId");
+
+    studentButton.classList.remove("active");
+
+    adminButton.classList.remove("active");
+
+    if(role==="student"){
+
+        studentButton.classList.add("active");
+
+        label.innerText="Student ID";
+
+        input.placeholder="Enter Student ID";
+
+    }
+    else{
+
+        adminButton.classList.add("active");
+
+        label.innerText="Admin ID";
+
+        input.placeholder="Enter Admin ID";
+
+    }
+
+}
+
+
+/* =====================================================
+LOGIN
+===================================================== */
+
+function login(){
+
+    let id=
+        document.getElementById("loginId").value.trim();
+
+    let password=
+        document.getElementById("loginPassword").value.trim();
+
+    let message=
+        document.getElementById("loginMessage");
+
+    if(id===""||password===""){
+
+        message.innerText=
+            "⚠️ Please enter ID and password.";
+
+        message.className="message error";
+
+        return;
+
+    }
+
+
+    /* ADMIN */
+
+    if(currentRole==="admin"){
+
+        if(
+            id==="ADMIN001" &&
+            password==="admin123"
+        ){
+
+            document.getElementById("loginPage")
+            .style.display="none";
+
+            document.getElementById("adminDashboard")
+            .style.display="block";
+
+        }
+        else{
+
+            message.innerText=
+                "❌ Invalid Admin ID or Password.";
+
+            message.className="message error";
+
+        }
+
+        return;
+    }
+
+
+    /* STUDENT */
+
+    const validStudents={
+
+        STU001:{
+            password:"student123",
+            name:"Rahul"
+        },
+
+        STU002:{
+            password:"student123",
+            name:"Priya"
+        },
+
+        STU003:{
+            password:"student123",
+            name:"Arjun"
+        },
+
+        STU004:{
+            password:"student123",
+            name:"Sneha"
+        },
+
+        STU005:{
+            password:"student123",
+            name:"Kiran"
+        }
+
+    };
+
+
+    if(
+        validStudents[id] &&
+        validStudents[id].password===password
+    ){
+
+        stopLiveProctoring();
+        clearInterval(examTimer);
+        examTimer = null;
+        currentQuestion = 0;
+        studentQuestions = [];
+        totalSeconds = 10 * 60;
+        tabSwitchCount = 0;
+        examIsRunning = false;
+        loggedInStudent=id;
+
+        document.getElementById("loginPage")
+        .style.display="none";
+
+        document.getElementById("studentPage")
+        .style.display="block";
+
+        document.getElementById("displayStudentId")
+        .innerText=id;
+
+        document.getElementById("examStudentId")
+        .innerText=id;
+
+        document.getElementById("studentWelcome")
+        .innerText=
+            "Welcome, "+
+            validStudents[id].name+
+            " ("+id+")";
+
+        document.getElementById("studentProfileName").innerText = validStudents[id].name;
+        document.getElementById("studentProfileId").innerText = id;
+        document.getElementById("studentProfileSet").innerText = getQuestionSetName(id);
+
+        document.getElementById("displayQuestionSet")
+        .innerText=
+            getQuestionSetName(id);
+        renderStudentSettings();
+        // Start with a clean student dashboard. Historical alerts remain in the admin panel.
+        const studentAlertBox = document.getElementById("studentNotifications");
+        if(studentAlertBox) studentAlertBox.innerHTML = "<p>No new notifications.</p>";
+        const studentToastBox = document.getElementById("studentToast");
+        if(studentToastBox){ studentToastBox.textContent = ""; studentToastBox.style.display = "none"; }
+        renderStudentNotifications();
+
+    }
+    else{
+
+        message.innerText=
+            "❌ Invalid Student ID or Password.";
+
+        message.className="message error";
+
+    }
+
+}
+
+
+/* =====================================================
+REGISTRATION
+===================================================== */
+
+function openRegistration(){
+
+    document.getElementById("loginPage")
+    .style.display="none";
+
+    if(currentRole==="student"){
+
+        document.getElementById("studentRegistration")
+        .style.display="block";
+
+    }
+    else{
+
+        document.getElementById("adminRegistration")
+        .style.display="block";
+
+    }
+
+}
+
+
+function backToLogin(){
+
+    document.getElementById("studentRegistration")
+    .style.display="none";
+
+    document.getElementById("adminRegistration")
+    .style.display="none";
+
+    document.getElementById("loginPage")
+    .style.display="flex";
+
+}
+
+
+/* =====================================================
+STUDENT REGISTER
+===================================================== */
+
+function studentRegister(){
+
+    let id=
+        document.getElementById("regStudentId").value.trim();
+
+    let name=
+        document.getElementById("regStudentName").value.trim();
+
+    let gender=
+        document.getElementById("regGender").value;
+
+    if(id===""||name===""||gender===""){
+
+        alert(
+            "⚠️ Please fill Student ID, Name and Gender."
+        );
+
+        return;
+
+    }
+
+    alert(
+        "✅ Student Registration Successful!\n\n"+
+        "Student ID: "+id+
+        "\nName: "+name+
+        "\nGender: "+gender
+    );
+
+    backToLogin();
+
+}
+
+
+/* =====================================================
+ADMIN REGISTER
+===================================================== */
+
+function adminRegister(){
+
+    let id=
+        document.getElementById("regAdminId").value.trim();
+
+    if(id===""){
+
+        alert("⚠️ Please enter Admin ID.");
+
+        return;
+
+    }
+
+    alert(
+        "✅ Admin Registration Successful!\n\n"+
+        "Admin ID: "+id
+    );
+
+    backToLogin();
+
+}
+
+
+/* =====================================================
+ADMIN NAVIGATION
+===================================================== */
+
+function showPage(pageId,element){
+
+    let pages=
+        document.querySelectorAll(".page");
+
+    pages.forEach(page=>{
+        page.classList.remove("active");
+    });
+
+    document.getElementById(pageId)
+    .classList.add("active");
+
+    let menuItems=
+        document.querySelectorAll(".menu a");
+
+    menuItems.forEach(item=>{
+        item.classList.remove("active");
+    });
+
+    element.classList.add("active");
+
+}
+
+
+/* =====================================================
+SETTINGS
+===================================================== */
+
+const PROCTOR_SETTINGS_KEY = "aiProctorSettings";
+const PROCTOR_ALERTS_KEY = "aiProctorAlerts";
+const PROCTOR_SETTING_NAMES = ["Face Detection", "Multiple Face Detection", "Eye Movement Detection", "Audio Monitoring", "Screen Monitoring"];
+let toastTimer;
+
+function getProctorSettings(){
+    const defaults = {};
+    PROCTOR_SETTING_NAMES.forEach(name => defaults[name] = true);
+    try { return {...defaults, ...(JSON.parse(localStorage.getItem(PROCTOR_SETTINGS_KEY) || "{}"))}; }
+    catch(e) { return defaults; }
+}
+
+function saveProctorSettings(settings){
+    localStorage.setItem(PROCTOR_SETTINGS_KEY, JSON.stringify(settings));
+    window.dispatchEvent(new Event("proctor-settings-updated"));
+}
+
+function settingChanged(setting,checkbox){
+    const settings = getProctorSettings();
+    settings[setting] = checkbox.checked;
+    saveProctorSettings(settings);
+    renderStudentSettings();
+    alert(""+(checkbox.checked ? "✅ " : "⚠️ ")+setting+(checkbox.checked ? " Enabled" : " Disabled")+". Student portal status has been updated.");
+}
+
+function renderStudentSettings(){
+    const target = document.getElementById("studentSettingStatuses");
+    if(!target) return;
+    const settings = getProctorSettings();
+    target.innerHTML = PROCTOR_SETTING_NAMES.map(name => `<div class="setting-status">${name}<br><span class="${settings[name] ? "status-on" : "status-off"}">${settings[name] ? "● Enabled by admin" : "● Disabled by admin"}</span></div>`).join("");
+    document.querySelectorAll("#settings input[type=checkbox][onchange]").forEach((box,index)=>{
+        const name=PROCTOR_SETTING_NAMES[index];
+        if(name && box.checked !== !!settings[name]) box.checked=!!settings[name];
+    });
+}
+
+function getProctorAlerts(){
+    try { return JSON.parse(localStorage.getItem(PROCTOR_ALERTS_KEY) || "[]"); }
+    catch(e) { return []; }
+}
+
+function createProctorAlert(type,severity="Medium"){
+    if(!loggedInStudent) return;
+    const settings=getProctorSettings();
+    const requiredSetting = type.toLowerCase().includes("face") ? "Multiple Face Detection" : type.toLowerCase().includes("eye") ? "Eye Movement Detection" : type.toLowerCase().includes("audio") ? "Audio Monitoring" : "Screen Monitoring";
+    if(settings[requiredSetting] === false){
+        showStudentToast(`${requiredSetting} is disabled by the administrator; no alert was recorded.`);
+        return;
+    }
+    const alerts=getProctorAlerts();
+    const alertItem={id:Date.now()+"-"+Math.random().toString(16).slice(2),student:loggedInStudent,type,time:new Date().toLocaleString(),timestamp:Date.now(),severity};
+    alerts.unshift(alertItem);
+    localStorage.setItem(PROCTOR_ALERTS_KEY,JSON.stringify(alerts.slice(0,200)));
+    window.dispatchEvent(new Event("proctor-alerts-updated"));
+    renderAlerts();
+    renderStudentNotifications();
+    showStudentToast("⚠️ Proctoring alert: "+type+". Admin has been notified in this demo.");
+}
+
+function triggerDemoAlert(type,severity){ createProctorAlert(type,severity); }
+
+function showStudentToast(message){
+    const toast=document.getElementById("studentToast");
+    if(!toast) return;
+    toast.textContent=message;
+    toast.style.display="block";
+    clearTimeout(toastTimer);
+    toastTimer=setTimeout(()=>toast.style.display="none",6000);
+}
+
+function renderStudentNotifications(){
+    // Student-facing historical alert lists are intentionally disabled.
+    // Alert records remain available to administrators in the AI Alerts section.
+    const studentBox = document.getElementById("studentNotifications");
+    if(studentBox) studentBox.innerHTML = "";
+    const examBox = document.getElementById("examNotifications");
+    if(examBox) examBox.innerHTML = "<p>Monitoring is active. Any alerts are recorded for administrator review.</p>";
+}
+
+function renderAlerts(){
+    const target=document.getElementById("alertRows");
+    if(!target) return;
+    const alerts=getProctorAlerts();
+    target.innerHTML=alerts.length ? alerts.slice(0,100).map(item=>`<tr><td>${escapeHtml(item.student)}</td><td>${escapeHtml(item.type)}</td><td>${escapeHtml(item.time)}</td><td><span class="badge ${item.severity==="High" ? "danger" : "warning"}">${escapeHtml(item.severity)}</span></td></tr>`).join("") : '<tr><td colspan="4">No new alerts. Alerts will appear here during an exam.</td></tr>';
+}
+
+function escapeHtml(value){return String(value).replace(/[&<>"']/g,ch=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[ch]));}
+
+window.addEventListener("storage",event=>{
+    if(event.key===PROCTOR_SETTINGS_KEY) renderStudentSettings();
+    if(event.key===PROCTOR_ALERTS_KEY){renderAlerts();renderStudentNotifications();}
+});
+window.addEventListener("proctor-settings-updated",renderStudentSettings);
+window.addEventListener("proctor-alerts-updated",()=>{renderAlerts();renderStudentNotifications();});
+document.addEventListener("visibilitychange",()=>{
+    if(document.visibilityState==="hidden" && loggedInStudent && examIsRunning && getProctorSettings()["Screen Monitoring"]){
+        tabSwitchCount++;
+        createProctorAlert(`Exam tab/window changed (violation ${tabSwitchCount})`, "High");
+    }
+});
+window.addEventListener("blur",()=>{
+    if(loggedInStudent && examIsRunning && getProctorSettings()["Screen Monitoring"]){
+        setProctorLine("tabStatus","🖥️ Exam focus: window lost focus — return to the exam");
+    }
+});
+window.addEventListener("focus",()=>{
+    if(examIsRunning) setProctorLine("tabStatus","🖥️ Exam focus: back on exam window",true);
+});
+document.addEventListener("fullscreenchange",()=>{
+    if(examIsRunning && !document.fullscreenElement && getProctorSettings()["Screen Monitoring"]){
+        createProctorAlert("Exam fullscreen exited", "High");
+        setProctorLine("tabStatus","🖥️ Exam focus: fullscreen exited — return to fullscreen");
+    }
+});
+window.addEventListener("focus",()=>{renderStudentSettings();renderStudentNotifications();renderAlerts();});
+document.addEventListener("DOMContentLoaded",()=>{renderStudentSettings();renderAlerts();});
+
+
+/* =====================================================
+LIVE CAMERA / MICROPHONE PROCTORING
+===================================================== */
+
+function setProctorLine(id, text, ok=false){
+    const el=document.getElementById(id);
+    if(el){el.textContent=text;el.style.color=ok ? "#15803d" : "#334155";}
+}
+
+async function startLiveProctoring(){
+    // A combined request is intentional: the exam requires BOTH permissions.
+    if(!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia){
+        showStudentToast("Camera and microphone access is not supported here. Open this page using localhost or HTTPS, then try again.");
+        setProctorLine("cameraStatus","📷 Camera: permission required");
+        setProctorLine("micStatus","🎙️ Microphone: permission required");
+        return false;
+    }
+
+    try{
+        setProctorLine("cameraStatus","📷 Camera: requesting permission…");
+        setProctorLine("micStatus","🎙️ Microphone: requesting permission…");
+
+        const stream = await navigator.mediaDevices.getUserMedia({
+            video: { facingMode: "user" },
+            audio: true
+        });
+
+        const hasLiveCamera = stream.getVideoTracks().some(track => track.readyState === "live");
+        const hasLiveMicrophone = stream.getAudioTracks().some(track => track.readyState === "live");
+
+        // Never continue if either track is missing or not active.
+        if(!hasLiveCamera || !hasLiveMicrophone){
+            stream.getTracks().forEach(track => track.stop());
+            throw new Error("Both camera and microphone are required.");
+        }
+
+        proctorStream = stream;
+        const video = document.getElementById("proctorCamera");
+        if(!video) throw new Error("Camera preview is unavailable.");
+
+        video.srcObject = proctorStream;
+        await video.play();
+
+        setProctorLine("cameraStatus","📷 Camera: ON",true);
+        setProctorLine("micStatus","🎙️ Microphone: ON",true);
+
+        const badge = document.getElementById("liveProctorStatus");
+        if(badge){
+            badge.textContent = "Monitoring active";
+            badge.style.background = "#dcfce7";
+            badge.style.color = "#166534";
+        }
+
+        // Enable monitoring only after both permissions and preview succeed.
+        examIsRunning = true;
+        startFaceDetection(video);
+        startVoiceMonitoring(proctorStream);
+        return true;
+
+    }catch(error){
+        stopLiveProctoring();
+
+        let reason = "Camera and microphone could not be started.";
+        if(error && error.name === "NotAllowedError"){
+            reason = "Camera or microphone permission was denied or blocked.";
+        }else if(error && error.name === "NotFoundError"){
+            reason = "Camera or microphone was not found on this device.";
+        }else if(error && error.name === "NotReadableError"){
+            reason = "Camera or microphone is already being used by another application.";
+        }else if(error && error.name === "SecurityError"){
+            reason = "Browser security blocked camera/microphone access. Use localhost or HTTPS.";
+        }
+
+        setProctorLine("cameraStatus","📷 Camera: not enabled");
+        setProctorLine("micStatus","🎙️ Microphone: not enabled");
+        showStudentToast(reason + " Allow BOTH permissions and click Start Examination again.");
+        return false;
+    }
+}
+
+function startFaceDetection(video){
+    const settings=getProctorSettings();
+    if(settings["Multiple Face Detection"]===false && settings["Face Detection"]===false){
+        setProctorLine("faceStatus","👥 Face detection: disabled by admin");
+        return;
+    }
+    if(typeof FaceDetection==="undefined") {
+        setProctorLine("faceStatus","👥 Face detection: model unavailable (check internet connection)");
+        createProctorAlert("Face detection model unavailable", "Medium");
+        return;
+    }
+    try{
+        proctorFaceDetector=new FaceDetection({locateFile:(file)=>`https://cdn.jsdelivr.net/npm/@mediapipe/face_detection/${file}`});
+        proctorFaceDetector.setOptions({model:"short",minDetectionConfidence:0.6});
+        proctorFaceDetector.onResults((results)=>{
+            if(!examIsRunning) return;
+            const faces=(results.detections||[]).length;
+            if(faces===0){
+                setProctorLine("faceStatus","👤 Face detection: no face visible");
+            }else if(faces===1){
+                setProctorLine("faceStatus","👤 Face detection: one face detected",true);
+            }else{
+                setProctorLine("faceStatus",`👥 Face detection: ${faces} faces detected`);
+                if(Date.now()-lastFaceAlertAt>12000){lastFaceAlertAt=Date.now();createProctorAlert(`Multiple faces detected (${faces})`,"High");}
+            }
+        });
+        const detectFrame=async()=>{
+            if(!examIsRunning || !video || video.readyState<2) return;
+            try{await proctorFaceDetector.send({image:video});}catch(e){}
+            if(examIsRunning) proctorAnimationFrame=requestAnimationFrame(detectFrame);
+        };
+        detectFrame();
+    }catch(error){
+        setProctorLine("faceStatus","👥 Face detection: could not initialize model");
+        createProctorAlert("Face detection initialization failed", "Medium");
+    }
+}
+
+function startVoiceMonitoring(stream){
+    if(getProctorSettings()["Audio Monitoring"]===false){
+        setProctorLine("micStatus","🎙️ Microphone: ON",true);
+        return;
+    }
+    try{
+        const AudioCtx=window.AudioContext||window.webkitAudioContext;
+        if(!AudioCtx) return;
+        proctorAudioContext=new AudioCtx();
+        const source=proctorAudioContext.createMediaStreamSource(stream);
+        const analyser=proctorAudioContext.createAnalyser();
+        analyser.fftSize=1024;source.connect(analyser);
+        const data=new Uint8Array(analyser.fftSize);
+        const sample=()=>{
+            if(!examIsRunning || !proctorAudioContext) return;
+            analyser.getByteTimeDomainData(data);
+            let sum=0;for(let i=0;i<data.length;i++){const v=(data[i]-128)/128;sum+=v*v;}
+            const volume=Math.sqrt(sum/data.length);
+            if(volume>0.075){
+                setProctorLine("micStatus","🎙️ Microphone: ON",true);
+                if(Date.now()-lastVoiceAlertAt>20000){lastVoiceAlertAt=Date.now();createProctorAlert("Voice/audio activity detected during exam","Medium");}
+            }else{
+                setProctorLine("micStatus","🎙️ Microphone: ON",true);
+            }
+            proctorAudioFrame=requestAnimationFrame(sample);
+        };
+        sample();
+    }catch(error){setProctorLine("micStatus","🎙️ Microphone: ON",true);}
+}
+
+function stopLiveProctoring(){
+    examIsRunning=false;
+    if(proctorAnimationFrame) cancelAnimationFrame(proctorAnimationFrame);
+    if(proctorAudioFrame) cancelAnimationFrame(proctorAudioFrame);
+    if(proctorFaceDetector){try{proctorFaceDetector.close();}catch(e){} proctorFaceDetector=null;}
+    if(proctorAudioContext){try{proctorAudioContext.close();}catch(e){} proctorAudioContext=null;}
+    if(proctorStream){proctorStream.getTracks().forEach(track=>track.stop());proctorStream=null;}
+    const video=document.getElementById("proctorCamera");if(video) video.srcObject=null;
+    const badge=document.getElementById("liveProctorStatus");if(badge){badge.textContent="Monitoring stopped";badge.style.background="#e5e7eb";badge.style.color="#374151";}
+}
+
+/* =====================================================
+START EXAM
+===================================================== */
+
+async function startExam(){
+    const startButton = document.querySelector("#studentPage .start-exam");
+    if(startButton){
+        startButton.disabled = true;
+        startButton.textContent = "Checking permissions…";
+    }
+
+    // Keep the exam locked until camera AND microphone are both available.
+    examIsRunning = false;
+    const mediaReady = await startLiveProctoring();
+
+    if(!mediaReady){
+        examIsRunning = false;
+        if(startButton){
+            startButton.disabled = false;
+            startButton.textContent = "🚀 Start Examination";
+        }
+        return; // Do not show the exam page or start the timer.
+    }
+
+    tabSwitchCount = 0;
+
+    try {
+        const requestFullscreen = document.documentElement.requestFullscreen;
+        if(requestFullscreen) await requestFullscreen.call(document.documentElement);
+    } catch(e) {
+        // Fullscreen is optional; camera and microphone permissions are not.
+    }
+
+    document.getElementById("studentPage").style.display = "none";
+    document.getElementById("examPage").style.display = "block";
+    document.getElementById("resultPage").style.display = "none";
+
+    currentQuestion = 0;
+    totalSeconds = 10 * 60;
+    studentQuestions = generateQuestions(loggedInStudent);
+
+    // Clear answers from an earlier attempt for this student.
+    for(let i = 0; i < 40; i++){
+        localStorage.removeItem("exam_" + loggedInStudent + "_" + i);
+    }
+
+    showQuestion();
+    renderStudentNotifications();
+    startTimer();
+
+    if(startButton){
+        startButton.disabled = false;
+        startButton.textContent = "🚀 Start Examination";
+    }
+}
+
+
+/* =====================================================
+SHOW QUESTION
+===================================================== */
+
+function showQuestion(){
+
+    let q=
+        studentQuestions[currentQuestion];
+
+    let questionArea=
+        document.getElementById("questionArea");
+
+    let html="";
+
+    html+=
+        '<div class="question">';
+
+    html+=
+        '<h3>'+
+        "Q"+
+        (currentQuestion+1)+
+        ". "+
+        q.question+
+        "</h3>";
+
+
+    q.options.forEach(option=>{
+
+        let safe=
+            option.replace(/'/g,"\\'");
+
+        html+=
+
+        '<label class="option">'+
+
+        '<input '+
+        'type="radio" '+
+        'name="currentQuestion" '+
+        'value="'+option+'" '+
+        'onchange="saveAnswer(\''+
+        safe+
+        '\')">'+
+
+        option+
+
+        '</label>';
+
+    });
+
+    html+="</div>";
+
+    questionArea.innerHTML=html;
+
+    loadSavedAnswer();
+
+
+    document.getElementById("questionNumber")
+    .innerText=
+        "Question "+
+        (currentQuestion+1)+
+        " of 40";
+
+
+    let progress=
+        ((currentQuestion+1)/40)*100;
+
+    document.getElementById("progressBar")
+    .style.width=
+        progress+"%";
+
+
+    document.getElementById("previousButton")
+    .style.visibility=
+        currentQuestion===0
+        ?"hidden"
+        :"visible";
+
+
+    let nextButton=
+        document.getElementById("nextButton");
+
+
+    if(currentQuestion===39){
+
+        nextButton.innerText=
+            "✅ Submit Exam";
+
+        nextButton.onclick=
+            submitExam;
+
+    }
+    else{
+
+        nextButton.innerText=
+            "Next →";
+
+        nextButton.onclick=
+            nextQuestion;
+
+    }
+
+}
+
+
+/* =====================================================
+SAVE ANSWER
+===================================================== */
+
+function saveAnswer(answer){
+
+    localStorage.setItem(
+        "exam_"+
+        loggedInStudent+
+        "_"+
+        currentQuestion,
+        answer
+    );
+
+}
+
+
+/* =====================================================
+LOAD ANSWER
+===================================================== */
+
+function loadSavedAnswer(){
+
+    let saved=
+        localStorage.getItem(
+            "exam_"+
+            loggedInStudent+
+            "_"+
+            currentQuestion
+        );
+
+    if(!saved)return;
+
+    let radios=
+        document.querySelectorAll(
+            'input[name="currentQuestion"]'
+        );
+
+    radios.forEach(radio=>{
+
+        if(radio.value===saved){
+
+            radio.checked=true;
+
+        }
+
+    });
+
+}
+
+
+/* =====================================================
+NEXT QUESTION
+===================================================== */
+
+function nextQuestion(){
+
+    let selected=
+        document.querySelector(
+            'input[name="currentQuestion"]:checked'
+        );
+
+    if(!selected){
+
+        alert(
+            "⚠️ Please select an answer before continuing."
+        );
+
+        return;
+
+    }
+
+    if(currentQuestion<39){
+
+        currentQuestion++;
+
+        showQuestion();
+
+    }
+
+}
+
+
+/* =====================================================
+PREVIOUS QUESTION
+===================================================== */
+
+function previousQuestion(){
+
+    if(currentQuestion>0){
+
+        currentQuestion--;
+
+        showQuestion();
+
+    }
+
+}
+
+
+/* =====================================================
+10 MINUTE TIMER
+===================================================== */
+
+function startTimer(){
+
+    clearInterval(examTimer);
+
+    examTimer=
+        setInterval(function(){
+
+            let minutes=
+                Math.floor(totalSeconds/60);
+
+            let seconds=
+                totalSeconds%60;
+
+
+            document.getElementById("timer")
+            .innerText=
+                "Time Left: "+
+                String(minutes).padStart(2,"0")+
+                ":"+
+                String(seconds).padStart(2,"0");
+
+
+            if(totalSeconds<=0){
+
+                clearInterval(examTimer);
+
+                alert(
+                    "⏰ Time is over!\n\n"+
+                    "Your examination will be submitted automatically."
+                );
+
+                submitExam();
+
+                return;
+
+            }
+
+            totalSeconds--;
+
+        },1000);
+
+}
+
+
+/* =====================================================
+SUBMIT EXAM
+===================================================== */
+
+function submitExam(){
+
+    clearInterval(examTimer);
+    stopLiveProctoring();
+    if(document.fullscreenElement && document.exitFullscreen){document.exitFullscreen().catch(()=>{});}
+
+    let score=0;
+
+
+    studentQuestions.forEach(
+        (question,index)=>{
+
+            let answer=
+                localStorage.getItem(
+                    "exam_"+
+                    loggedInStudent+
+                    "_"+
+                    index
+                );
+
+            if(answer===question.answer){
+
+                score++;
+
+            }
+
+        }
+    );
+
+
+    for(
+        let i=0;
+        i<40;
+        i++
+    ){
+
+        localStorage.removeItem(
+            "exam_"+
+            loggedInStudent+
+            "_"+
+            i
+        );
+
+    }
+
+
+    document.getElementById("examPage")
+    .style.display="none";
+
+    document.getElementById("resultPage")
+    .style.display="block";
+
+
+    document.getElementById("resultScore")
+    .innerText=
+        score+" / 40";
+
+
+    document.getElementById("resultStudentId")
+    .innerText=
+        loggedInStudent;
+
+
+    document.getElementById("resultSet")
+    .innerText=
+        getQuestionSetName(loggedInStudent);
+
+}
+
+
+/* =====================================================
+LOGOUT DURING EXAM
+===================================================== */
+
+function logoutDuringExam(){
+
+    let confirmLogout=
+        confirm(
+            "Are you sure you want to logout?\n\n"+
+            "Your current examination will end."
+        );
+
+    if(!confirmLogout)return;
+
+    stopLiveProctoring();
+    if(document.fullscreenElement && document.exitFullscreen){document.exitFullscreen().catch(()=>{});}
+    clearInterval(examTimer);
+
+
+    for(
+        let i=0;
+        i<40;
+        i++
+    ){
+
+        localStorage.removeItem(
+            "exam_"+
+            loggedInStudent+
+            "_"+
+            i
+        );
+
+    }
+
+
+    alert(
+        "🚪 You have been logged out.\n\n"+
+        "The examination has ended."
+    );
+
+
+    resetToLogin();
+
+}
+
+
+/* =====================================================
+BACK TO LOGIN
+===================================================== */
+
+function backToLoginAfterResult(){
+
+    resetToLogin();
+
+}
+
+
+/* =====================================================
+LOGOUT
+===================================================== */
+
+function logout(){
+    resetToLogin();
+}
+
+
+/* =====================================================
+RESET
+===================================================== */
+
+function resetToLogin(){
+    // Stop every running resource before clearing the logged-in identity.
+    stopLiveProctoring();
+    clearInterval(examTimer);
+    examTimer = null;
+
+    if(document.fullscreenElement && document.exitFullscreen){
+        document.exitFullscreen().catch(()=>{});
+    }
+
+    // Remove this attempt's saved answers, but preserve administrator alerts/settings.
+    if(loggedInStudent){
+        for(let i = 0; i < 40; i++){
+            localStorage.removeItem("exam_" + loggedInStudent + "_" + i);
+        }
+    }
+
+    currentQuestion = 0;
+    studentQuestions = [];
+    totalSeconds = 10 * 60;
+    tabSwitchCount = 0;
+    lastVoiceAlertAt = 0;
+    lastFaceAlertAt = 0;
+    loggedInStudent = "";
+    examIsRunning = false;
+
+    const video = document.getElementById("proctorCamera");
+    if(video) video.srcObject = null;
+
+    const questionArea = document.getElementById("questionArea");
+    if(questionArea) questionArea.innerHTML = "";
+
+    const timer = document.getElementById("timer");
+    if(timer) timer.textContent = "Time Left: 10:00";
+
+    const toast = document.getElementById("studentToast");
+    if(toast){
+        toast.textContent = "";
+        toast.style.display = "none";
+    }
+
+    ["adminDashboard","studentPage","examPage","resultPage","studentRegistration","adminRegistration"].forEach(id=>{
+        const el = document.getElementById(id);
+        if(el) el.style.display = "none";
+    });
+
+    const loginPage = document.getElementById("loginPage");
+    if(loginPage) loginPage.style.display = "flex";
+
+    const loginId = document.getElementById("loginId");
+    const loginPassword = document.getElementById("loginPassword");
+    const loginMessage = document.getElementById("loginMessage");
+    if(loginId) loginId.value = "";
+    if(loginPassword) loginPassword.value = "";
+    if(loginMessage){
+        loginMessage.innerText = "";
+        loginMessage.className = "message";
+    }
+
+    // A new visit always returns to the default Student login selection.
+    if(typeof selectRole === "function") selectRole("student");
+
+    setProctorLine("cameraStatus","📷 Camera: waiting for permission");
+    setProctorLine("micStatus","🎙️ Microphone: waiting for permission");
+    setProctorLine("faceStatus","👥 Face detection: waiting to start");
+    setProctorLine("tabStatus","🖥️ Exam focus: stay on this exam tab");
+
+    const badge = document.getElementById("liveProctorStatus");
+    if(badge){
+        badge.textContent = "Not started";
+        badge.style.background = "#e5e7eb";
+        badge.style.color = "#374151";
+    }
+
+}
+
+// Restore admin-controlled toggles when this page opens.
+(function restoreProctorSettings(){
+    const settings=getProctorSettings();
+    document.querySelectorAll("#settings input[type=checkbox][onchange]").forEach((box,index)=>{
+        const name=PROCTOR_SETTING_NAMES[index];
+        if(name) box.checked=!!settings[name];
+    });
+    renderStudentSettings();
+    renderAlerts();
+})();
+
+</script>
+
+
+
+</body>
+</html>
